@@ -10,9 +10,84 @@ public class ThreadingTest {
        // runLateThenEarlyCallback();
       //  runTestCountingSemaPhore();
      //   runTestReadWriteLock();
-        runTestUnisexBathroom();
+   //     runTestUnisexBathroom();
+     //   testSequence();
+       // testFooBar();
+        testZeroOnTwo();
+    }
+private static void testZeroOnTwo() throws InterruptedException
+    {
+        PrintNumberSeries p1 = new PrintNumberSeries(20);
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                p1.PrintEven();
+            }
+        });
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                p1.PrintOdd();
+            }
+        });
+        Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                p1.PrintZero();
+            }
+        });
+        t1.start();
+        t2.start();
+        t3.start();
+        t1.join();
+        t2.join();
+        t3.join();
+    }
+    private static void testFooBar() throws InterruptedException{
+        PrintFooBar gb = new PrintFooBar(10);
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    gb.PrintBar();
+                }
+                catch (InterruptedException e)
+                {
+
+                }
+
+            }
+        });
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    gb.PrintFoo();
+                }
+                catch (InterruptedException e)
+                {
+
+                }
+            }
+        });
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
     }
 
+    private static void testSequence()
+    {
+        OrderedPrinting obj = new OrderedPrinting();
+
+        OrderedPrintingThread t1 = new OrderedPrintingThread(obj, "first");
+        OrderedPrintingThread t2 = new OrderedPrintingThread(obj, "second");
+        OrderedPrintingThread t3 = new OrderedPrintingThread(obj, "third");
+
+        t2.start();
+        t3.start();
+        t1.start();
+    }
     private static void runTestReadWriteLock() throws InterruptedException{
         final ReadWriteLock rwl = new ReadWriteLock();
 
