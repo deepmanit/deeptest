@@ -6,7 +6,7 @@ public class PrintNumberSeriesUsingSemaphore {
     private int n;
     private Semaphore zeroSem, oddSem, evenSem;
 
-    public PrintNumberSeries(int n) {
+    public PrintNumberSeriesUsingSemaphore(int n) {
         this.n = n;
         zeroSem = new Semaphore(1);
         oddSem = new Semaphore(0);
